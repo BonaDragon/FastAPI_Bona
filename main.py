@@ -1,64 +1,43 @@
-from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
+import os
+from fastapi import FastAPI, HTTPException, Depends
+from sqlmodel import create_engine, Session, SQLModel
+from dotenv import load_dotenv
+from FastAPI_Bona.models.user import User, UserCreate, UserRead
+
 
 app = FastAPI()
 
-# Lista de usuarios
-users = [
-    {"id": 1, "nombre": "Juan", "surname": "Gonzalez", "edad": 30},
-    {"id": 2, "nombre": "Ana", "surname": "Perez", "edad": 22},
-    {"id": 3, "nombre": "Luis", "surname": "Martinez", "edad": 21}
-]
+load_dotenv()
 
-class UserModel(BaseModel):
-    id: int
-    nombre: str
-    surname: str
-    edad: int
+DATABASE_URL = os.getenv("DATABASE_URL")
+engine = create_engine(DATABASE_URL)
 
-# Función para obtener el siguiente ID
-def get_next_id():
-    if not users:
-        return 1
-    max_id = max(user["id"] for user in users)
-    return max_id + 1
+SQLModel.metadata.create_all(engine)
 
-# Función para devolver todos los usuarios en diccionario con pydantic V2(BaseModel)
-def list_all():
-    return [UserModel(**user).model_dump() for user in users]
+#DB connect
+def get_db():
+    db = Session(engine)
+    try:
+        yield db
+    finally:
+        db.close()
+
+
 
 # Endpoints
-@app.get("/api/users/{user_id}", response_model=dict)
-def find_user(user_id: int):
-    for user in users:
-        if user["id"] == user_id:
-            return UserModel(**user).model_dump()
-    raise HTTPException(status_code=404, detail="User not found")
+@app.get("/api/user/{user_id}", response_model=UserRead)
+def find_user(user_id: int, db: Session = Depends(get_db)):
+    # Construir la consulta SQL
+    user = db.get(User, user_id)
 
-@app.get("/api/users", response_model=dict)
-def list_users():
-    return {"users": list_all()}
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
 
-@app.post("/api/users", response_model=dict)
-def create_user(name: str, surname: str, age: int):
-    new_user = {"id": get_next_id(), "nombre": name, "surname": surname, "edad": age}
-    users.append(new_user)
-    return {"users": list_all()}
+    return UserRead.model_validate(user)
 
-@app.put("/api/users/{user_id}", response_model=dict)
-def update_user(user_id: int, name: str, surname: str, age: int):
-    for user in users:
-        if user["id"] == user_id:
-            user["nombre"] = name
-            user["surname"] = surname
-            user["edad"] = age
-            return {"users": list_all()}
-    raise HTTPException(status_code=404, detail="User not found")
-
-@app.delete("/api/users/{user_id}", response_model=dict)
-def delete_user(user_id: int):
-    for user in users:
-        if user["id"] == user_id:
-            users.remove(user)
-            return {"users": list_all()}
-    raise HTTPException(status_code=404, detail="User not found")
+@app.post("/api/user", response_model=UserCreate)
+def create_user(user: UserCreate, db: Session = Depends(get_db)):
+    db_user = User.model_validate(user)
+    db.add(db_user)
+    db.commit()
+    return db_user
