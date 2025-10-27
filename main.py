@@ -28,7 +28,7 @@ def get_db():
 
 # Endpoints
 
-#Ceate - Afegir un nou registre a la taula
+#1.Ceate - Afegir un nou registre a la taula
 @app.post("/api/user", response_model=dict)
 def create_product(user: ProductCreate, db: Session = Depends(get_db)):
     db_product = Product.model_validate(user)
@@ -37,7 +37,7 @@ def create_product(user: ProductCreate, db: Session = Depends(get_db)):
     return {"message": "Product created!"}
 
 
-#Read - Consultar totes les dades d’un registre a la taula.
+#2.Read - Consultar totes les dades d’un registre a la taula.
 @app.get("/api/product/{id}", response_model=ProductRead)
 def find_product(product_id: int, db: Session = Depends(get_db)):
 
@@ -45,14 +45,14 @@ def find_product(product_id: int, db: Session = Depends(get_db)):
 
     return ProductRead.model_validate(product)
 
-#Read - Consultar totes les dades de tots els registres de la taula.
+#3.Read - Consultar totes les dades de tots els registres de la taula.
 @app.get("/api/products/",  response_model=List[ProductRead])
 def list_products(db: Session = Depends(get_db)):
 
     product = db.exec(select(Product)).all()
     return product
 
-#Read - Consultar les dades filtrant per un camp
+#4.Read - Consultar les dades filtrant per un camp
 @app.get("/api/products/{filter}",  response_model=List[ProductRead])
 def list_products_by_higher_price(value:str ,db: Session = Depends(get_db)):
     #selecciona productos que sean de un precio mayor al seleccionado
@@ -61,10 +61,28 @@ def list_products_by_higher_price(value:str ,db: Session = Depends(get_db)):
     return product
 
 
-#Delete - Eliminar un registre per id
+#5.Delete - Eliminar un registre per id
 @app.delete("/api/product/{id}", response_model=dict)
 def delete_product(product_id: int, db: Session = Depends(get_db)):
     product = db.get(Product, product_id)
     db.delete(product)
     db.commit()
     return {"message": "Product have been deleted!"}
+
+
+#6.Read - Lectura parcial
+
+
+
+
+
+
+#Update - Modificació parcial un camp (PATCH)
+@app.patch("/items/{item_id}", response_model=Item)
+async def update_item(item_id: str, item: Item):
+    stored_item_data = items[item_id]
+    stored_item_model = Item(**stored_item_data)
+    update_data = item.dict(exclude_unset=True)
+    updated_item = stored_item_model.copy(update=update_data)
+    items[item_id] = jsonable_encoder(updated_item)
+    return updated_item
