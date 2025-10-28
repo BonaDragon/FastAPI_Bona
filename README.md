@@ -15,7 +15,8 @@
 
 
 #4.Read - Consultar les dades filtrant per un camp
-<img width="1416" height="911" alt="image" src="https://github.com/user-attachments/assets/4eafde06-8a0c-4151-94f3-b556a4b7c9cc" />
+<img width="1429" height="851" alt="image" src="https://github.com/user-attachments/assets/f970cd11-28d7-4613-9ba6-77bbb4168e5b" />
+(Search higher price)
 
 
 #5.Delete - Eliminar un registre per id
@@ -23,8 +24,8 @@
 
 
 #6.Read - Lectura parcial
-<img width="1429" height="851" alt="image" src="https://github.com/user-attachments/assets/f970cd11-28d7-4613-9ba6-77bbb4168e5b" />
-(Search higher price)
+<img width="1333" height="729" alt="image" src="https://github.com/user-attachments/assets/dd8a6a11-b9d5-4761-b63f-5555747b4bc3" />
+
 
 
 #7.Update - Modificació total (PUT)
