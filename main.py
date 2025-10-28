@@ -1,10 +1,9 @@
 import os
 from typing import List
-
-from fastapi import FastAPI, HTTPException, Depends
+from fastapi import FastAPI, Depends
 from sqlmodel import create_engine, Session, SQLModel, select
 from dotenv import load_dotenv
-from FastAPI_Bona.models.product import Product, ProductCreate, ProductRead
+from FastAPI_Bona.models.product import Product, ProductCreate, ProductRead, ProductPartialRead, ProductNameChange, ProductNameBrand
 
 
 app = FastAPI()
@@ -30,8 +29,8 @@ def get_db():
 
 #1.Ceate - Afegir un nou registre a la taula
 @app.post("/api/user", response_model=dict)
-def create_product(user: ProductCreate, db: Session = Depends(get_db)):
-    db_product = Product.model_validate(user)
+def create_product(product: ProductCreate, db: Session = Depends(get_db)):
+    db_product = Product.model_validate(product)
     db.add(db_product)
     db.commit()
     return {"message": "Product created!"}
@@ -54,7 +53,7 @@ def list_products(db: Session = Depends(get_db)):
 
 #4.Read - Consultar les dades filtrant per un camp
 @app.get("/api/products/{filter}",  response_model=List[ProductRead])
-def list_products_by_higher_price(value:str ,db: Session = Depends(get_db)):
+def list_products_by_higher_price(value:int ,db: Session = Depends(get_db)):
     #selecciona productos que sean de un precio mayor al seleccionado
     stmt = select(Product).where(Product.price > value)
     product = db.exec(stmt).all()
@@ -69,20 +68,44 @@ def delete_product(product_id: int, db: Session = Depends(get_db)):
     db.commit()
     return {"message": "Product have been deleted!"}
 
-
 #6.Read - Lectura parcial
 
+@app.get("/api/product/partial/{id}", response_model=ProductPartialRead)
+def find_product_partial_data(product_id: int, db: Session = Depends(get_db)):
+
+    product = db.get(Product, product_id)
+
+    return ProductPartialRead.model_validate(product)
 
 
+#7.Update - Modificació total (PUT)
+
+@app.put("/api/product/update/{product_id}", response_model= ProductCreate)
+def update_product(product_id: int, product: ProductCreate, db: Session = Depends(get_db)):
+    db_product = db.get(Product, product_id)
+    product_data = product.model_dump(exclude_unset=True)
+    db_product.sqlmodel_update(product_data)
+    db.add(db_product)
+    db.commit()
+    return ProductCreate.model_validate(db_product)
 
 
+#8.Update - Modificació parcial un camp (PATCH)
+@app.patch("/api/product/{product_id}", response_model = ProductNameChange)
+def update_name(product_id: int, product: ProductNameChange, db: Session = Depends(get_db)):
+    db_product = db.get(Product, product_id)
+    product_data = product.model_dump(exclude_unset=True)
+    db_product.sqlmodel_update(product_data)
+    db.add(db_product)
+    db.commit()
+    return ProductNameChange.model_validate(db_product)
 
-#Update - Modificació parcial un camp (PATCH)
-@app.patch("/items/{item_id}", response_model=Item)
-async def update_item(item_id: str, item: Item):
-    stored_item_data = items[item_id]
-    stored_item_model = Item(**stored_item_data)
-    update_data = item.dict(exclude_unset=True)
-    updated_item = stored_item_model.copy(update=update_data)
-    items[item_id] = jsonable_encoder(updated_item)
-    return updated_item
+#9.Update - Modificació parcial dos camps
+@app.patch("/api/product/name&brand/{product_id}", response_model = ProductNameBrand)
+def update_name_brand(product_id: int, product: ProductNameBrand, db: Session = Depends(get_db)):
+    db_product = db.get(Product, product_id)
+    product_data = product.model_dump(exclude_unset=True)
+    db_product.sqlmodel_update(product_data)
+    db.add(db_product)
+    db.commit()
+    return ProductNameBrand.model_validate(db_product)
