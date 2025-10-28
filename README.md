@@ -11,7 +11,7 @@
 
 
 #3.Read - Consultar totes les dades de tots els registres de la taula.
-<img width="1608" height="859" alt="image" src="https://github.com/user-attachments/assets/5b5f25be-478d-4731-a482-b94afa0ec914" />
+<img width="1416" height="911" alt="image" src="https://github.com/user-attachments/assets/4eafde06-8a0c-4151-94f3-b556a4b7c9cc" />
 
 
 #4.Read - Consultar les dades filtrant per un camp
