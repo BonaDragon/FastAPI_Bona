@@ -1,27 +1,59 @@
 # FastAPI_Bona
 
-1.Cear - Afegir a la list
-<img width="1777" height="702" alt="image" src="https://github.com/user-attachments/assets/983cf677-a9f9-4ced-9de9-bfb1d4d5b02f" />
-<img width="1733" height="622" alt="image" src="https://github.com/user-attachments/assets/011f5bc4-0b3e-4b44-b094-0848300e2452" />
+
+#1.Ceate - Afegir un nou registre a la taula
+<img width="1762" height="543" alt="image" src="https://github.com/user-attachments/assets/835b7ea8-3297-4b02-aa21-092261bfef1e" />
+<img width="1752" height="221" alt="image" src="https://github.com/user-attachments/assets/67f3a28a-e1a6-49e5-995c-5089a8e39203" />
 
 
-2.Llegir - Consultar un usuari / objecte de la llista
-<img width="1770" height="481" alt="image" src="https://github.com/user-attachments/assets/9a54a497-6249-4a9c-b9af-c5c105ffe07a" />
-<img width="1753" height="249" alt="image" src="https://github.com/user-attachments/assets/4eefdada-1eed-40ec-b565-512a27634aed" />
+#2.Read - Consultar totes les dades d’un registre a la taula.
+<img width="1607" height="895" alt="image" src="https://github.com/user-attachments/assets/cde95024-9578-43a7-82c7-8c04a043c0e2" />
 
 
-3.Llegir - Consultar tots els usuaris
-<img width="1779" height="382" alt="image" src="https://github.com/user-attachments/assets/900646db-3191-45fd-960c-0a6159ce4ab3" />
-<img width="1746" height="615" alt="image" src="https://github.com/user-attachments/assets/83bd81cc-cb18-4b7a-bf14-08dd7f62e71b" />
+#3.Read - Consultar totes les dades de tots els registres de la taula.
+<img width="1608" height="859" alt="image" src="https://github.com/user-attachments/assets/5b5f25be-478d-4731-a482-b94afa0ec914" />
 
 
-4.Actualitzar - Actualització completa
-<img width="1787" height="692" alt="image" src="https://github.com/user-attachments/assets/5bf552d6-b303-47e5-8e00-f330c85ac113" />
-<img width="1768" height="475" alt="image" src="https://github.com/user-attachments/assets/86e78e84-eaa1-4e92-bfbb-94509870561a" />
+#4.Read - Consultar les dades filtrant per un camp
+<img width="1416" height="911" alt="image" src="https://github.com/user-attachments/assets/4eafde06-8a0c-4151-94f3-b556a4b7c9cc" />
 
-5.Eliminar - Esborrar usuari
-<img width="1815" height="438" alt="image" src="https://github.com/user-attachments/assets/e0f9d8f8-7e0b-450f-adcb-c81dd29cdf34" />
-<img width="1755" height="425" alt="image" src="https://github.com/user-attachments/assets/986e649a-0311-4a66-b050-77c63b1565aa" />
+
+#5.Delete - Eliminar un registre per id
+<img width="1419" height="531" alt="image" src="https://github.com/user-attachments/assets/1c79c46e-900d-4b00-9fa0-6910ec2f9cb6" />
+
+
+#6.Read - Lectura parcial
+<img width="1429" height="851" alt="image" src="https://github.com/user-attachments/assets/f970cd11-28d7-4613-9ba6-77bbb4168e5b" />
+(Search higher price)
+
+
+#7.Update - Modificació total (PUT)
+<img width="1330" height="749" alt="image" src="https://github.com/user-attachments/assets/71b1a40b-eb3c-409f-b1a8-28f10ef5db90" />
+<img width="1323" height="193" alt="image" src="https://github.com/user-attachments/assets/b3fb219d-a9a2-49ee-87c4-bf1470b3e4af" />
+
+
+#8.Update - Modificació parcial un camp (PATCH) 
+<img width="1338" height="682" alt="image" src="https://github.com/user-attachments/assets/f60e71ef-90b5-4691-a048-9f57b03eda20" />
+<img width="1322" height="164" alt="image" src="https://github.com/user-attachments/assets/c207be05-f5ef-4fa2-a237-6f2c8badcf57" />
+
+
+#9.Update - Modificació parcial dos camps
+<img width="1341" height="689" alt="image" src="https://github.com/user-attachments/assets/29513bdc-dd25-4639-ae2d-b6ee7a9b5fa6" />
+<img width="1321" height="136" alt="image" src="https://github.com/user-attachments/assets/c91df217-4442-46f0-9c31-779ab4e49f67" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
